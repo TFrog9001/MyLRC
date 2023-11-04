@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
 </head>
+
 <body>
     <div class="container mt-5">
         <div class="row justify-content-center">
@@ -25,6 +27,7 @@
                                 <p id="passwordError" class="text-danger"></p>
                             </div>
                             <input name="login" type="submit" class="btn btn-primary" value="Đăng Nhập">
+                            <p id="loginMessage" class="text-danger"></p>
                         </form>
                     </div>
                 </div>
@@ -35,8 +38,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="	https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $('#loginForm').submit(function(e) {
+        $(document).ready(function () {
+            $('#loginForm').submit(function (e) {
                 e.preventDefault();
                 clearErrors();
                 let username = $('#username').val();
@@ -53,6 +56,24 @@
                 if (password.length < 8) {
                     $('#passwordError').text('Mật khẩu phải có ít nhất 8 kí tự.');
                 }
+
+                if (username.length >= 6 && /\d/.test(username) && password.length >= 8) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/login',
+                        data: {
+                            username: username,
+                            password: password
+                        },
+                        success: function (response) {
+                            if (response === "success") {
+                                window.location.href = "/Home";
+                            } else {
+                                $('#loginMessage').text('Tên đăng nhập hoặc mật khẩu không đúng.');
+                            }
+                        }
+                    });
+                }
             });
 
             function clearErrors() {
@@ -62,4 +83,5 @@
         });
     </script>
 </body>
+
 </html>

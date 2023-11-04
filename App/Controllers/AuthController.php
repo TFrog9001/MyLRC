@@ -18,7 +18,6 @@ class AuthController
 
 
     public function login(){
-        echo "1";
         include "../App/Views/login.php";
     }
 

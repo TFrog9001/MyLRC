@@ -3,19 +3,13 @@
 require_once '../vendor/autoload.php';
 
 $router = new \Bramus\Router\Router();
+// Định nghĩa các route
+$router->get('/', '\App\Controllers\HomeController@index');
 
-// Define the home route to use HomeController
-$router->get('/', function() {
-    (new \App\Controllers\HomeController())->index();
-});
+$router->get('/login', '\App\Controllers\AuthController@login');
+$router->post('/login', 'AuthController@handleLogin');
 
-// Define the login route to use AuthController
-$router->get('/login', function() {
-    (new \App\Controllers\AuthController())->login();
-});
-
-// Other routes definitions...
+$router->get('/register', 'AuthController@register');
+$router->post('/register', 'AuthController@handleRegister');
 
 $router->run();
-
-?>

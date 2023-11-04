@@ -7,7 +7,6 @@
     <title>Login Page</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
 </head>
-
 <body>
     <div class="container mt-5">
         <div class="row justify-content-center">
@@ -15,7 +14,7 @@
                 <div class="card">
                     <div class="card-header fs-3">Đăng Nhập</div>
                     <div class="card-body">
-                        <form id="loginForm" method="post" action="/checklogin" enctype="multipart/form-data">
+                        <form id="loginForm" method="post" action="/login" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="username">Tên đăng nhập:</label>
                                 <input type="text" class="form-control" id="username" name="username" required>
@@ -34,7 +33,6 @@
             </div>
         </div>
     </div>
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="	https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -45,7 +43,6 @@
                 let username = $('#username').val();
                 let password = $('#password').val();
 
-                console.log(username, password);
                 // Kiểm tra validate tên đăng nhập
                 if (username.length < 6) {
                     $('#usernameError').text('Tên đăng nhập phải có ít nhất 6 kí tự.');
@@ -62,27 +59,9 @@
                     'username': username,
                     'password': password
                 };
-
+                console.log(formData);
                 if (username.length >= 6 && /\d/.test(username) && password.length >= 8) {
-                    $.ajax({
-                        type: 'POST',
-                        url: '/login', // Adjust the URL to the correct endpoint
-                        data: formData,
-                        dataType: 'json',
-                        encode: true
-                    }).done(function (data) {
-                        console.log(data);
-                        if (data.status === 'success') {
-                            console.log('home');
-                            // Handle success (e.g., redirect to dashboard)
-                        } else {
-                            // Handle failure (e.g., display error message)
-                            $('#loginError').text(data.message);
-                        }
-                    }).fail(function (jqXHR, textStatus, errorThrown) {
-                        // Handle error
-                        console.error('Error occurred: ' + textStatus, errorThrown);
-                    });
+                    $('#loginForm').submit();
                 }
             });
 

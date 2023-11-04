@@ -4,8 +4,7 @@ namespace App\Controllers;
 
 class HomeController {
     public function index() {
-        echo "Hello home";
-        include "../views/home.php";
+        require_once "../App/Views/home.php";
     }
 }
 

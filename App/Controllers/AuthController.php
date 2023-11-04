@@ -2,8 +2,8 @@
 
 namespace App\Controllers;
 
-use Database;
-use PDO;
+
+use App\Config\Database;
 
 class AuthController
 {
@@ -19,7 +19,7 @@ class AuthController
 
     public function login(){
         echo "1";
-        include "./views/login.php";
+        include "../App/Views/login.php";
     }
 
     public function handleLogin()
@@ -35,7 +35,7 @@ class AuthController
             $query = $db->prepare("SELECT * FROM users WHERE username = :username");
             $query->bindParam(':username', $username);
             $query->execute();
-            $user = $query->fetch(PDO::FETCH_ASSOC);
+            $user = $query->fetch(\PDO::FETCH_ASSOC);
 
             // Các thao tác xử lý đăng nhập tiếp theo
             if ($user && password_verify($password, $user['password'])) {

@@ -22,30 +22,33 @@ class AuthController
     }
 
     public function handleLogin()
-    {
+    {   
+        header('Content-Type: application/json');
         // Sử dụng kết nối cơ sở dữ liệu
         $db = $this->db->getConnection();
 
-        // Xử lý đăng nhập
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Sử dụng toán tử null coalescing để tránh cảnh báo nếu các khóa không tồn tại
             $username = $_POST['username'];
             $password = $_POST['password'];
-
-            $query = $db->prepare("SELECT * FROM users WHERE username = :username");
+            
+            $query = $db->prepare("SELECT * FROM users WHERE username = :username;");
             $query->bindParam(':username', $username);
             $query->execute();
             $user = $query->fetch(\PDO::FETCH_ASSOC);
 
-            // Các thao tác xử lý đăng nhập tiếp theo
+            // Kiểm tra xem username và password có được set không
             if ($user && $password === $user['password']) {
-                // Đăng nhập thành công, thực hiện thao tác cần thiết
-                // Ví dụ: Lưu trạng thái đăng nhập vào session và chuyển hướng
                 $_SESSION['user_id'] = $user['id'];
-                echo 'success';
             } else {
-                // Đăng nhập thất bại, hiển thị thông báo lỗi
-                echo "Tên đăng nhập hoặc mật khẩu không đúng.";
+                // Trả về thông báo lỗi nếu username hoặc password không được cung cấp
+                echo json_encode(['status' => 'error', 'message' => 'Tên đăng nhập và mật khẩu là bắt buộc.']);
+                exit;
             }
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Invalid request method.']);
+            exit;
         }
+    
     }
 }

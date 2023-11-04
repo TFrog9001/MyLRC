@@ -45,6 +45,7 @@
                 let username = $('#username').val();
                 let password = $('#password').val();
 
+                console.log(username, password);
                 // Kiểm tra validate tên đăng nhập
                 if (username.length < 6) {
                     $('#usernameError').text('Tên đăng nhập phải có ít nhất 6 kí tự.');
@@ -57,21 +58,30 @@
                     $('#passwordError').text('Mật khẩu phải có ít nhất 8 kí tự.');
                 }
 
+                var formData = {
+                    'username': username,
+                    'password': password
+                };
+
                 if (username.length >= 6 && /\d/.test(username) && password.length >= 8) {
                     $.ajax({
                         type: 'POST',
-                        url: '/login',
-                        data: {
-                            username: username,
-                            password: password
-                        },
-                        success: function (response) {
-                            if (response === "success") {
-                                window.location.href = "/Home";
-                            } else {
-                                $('#loginMessage').text('Tên đăng nhập hoặc mật khẩu không đúng.');
-                            }
+                        url: '/login', // Adjust the URL to the correct endpoint
+                        data: formData,
+                        dataType: 'json',
+                        encode: true
+                    }).done(function (data) {
+                        console.log(data);
+                        if (data.status === 'success') {
+                            console.log('home');
+                            // Handle success (e.g., redirect to dashboard)
+                        } else {
+                            // Handle failure (e.g., display error message)
+                            $('#loginError').text(data.message);
                         }
+                    }).fail(function (jqXHR, textStatus, errorThrown) {
+                        // Handle error
+                        console.error('Error occurred: ' + textStatus, errorThrown);
                     });
                 }
             });

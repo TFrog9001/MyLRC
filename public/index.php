@@ -19,7 +19,7 @@ $router->get('/register', '\App\Controllers\AuthController@register');
 $router->post('/register', '\App\Controllers\AuthController@handleRegister');
 
 if (isset($_SESSION['user_name'])) {
-    $router->get('/books','\App\Controllers\BookController@getBooks');
+    $router->get('/books','\App\Controllers\BookController@books');
     $router->get('/books/edit/(\d+)','\App\Controllers\BookController@editBook');
 }
 

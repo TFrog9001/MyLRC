@@ -94,7 +94,7 @@ class AuthController
             }
 
             // Thêm người dùng mới vào cơ sở dữ liệu
-            $user = (new User())->addUser($fullname, $username, $email, $password);
+            $user = (new User())->addUser($username, $password, $fullname, $email);
 
             if ($user) {
                 // Đăng ký thành công, bạn có thể thực hiện việc đăng nhập ngay tại đây

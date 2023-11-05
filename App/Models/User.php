@@ -49,21 +49,20 @@ class User
 
     public function addUser(string $username, string $password, string $fullname, string $email)
     {
+        $db = $this->db->getConnection();
+
         $role = 'Member';
 
-        $db = $this->db->getConnection();
-        $sql = "INSERT INTO users (Username, Password, Fullname, Email, Role) VALUES (?, ?, ?, ?, ?)";
-        $stmt = $db->prepare($sql);
+        $stmt = $db->prepare("CALL AddUser(:username, :password, :fullname, :email, :role)");
+        $stmt->bindParam(':username', $username, \PDO::PARAM_STR);
+        $stmt->bindParam(':password', $password, \PDO::PARAM_STR);
+        $stmt->bindParam(':fullname', $fullname, \PDO::PARAM_STR);
+        $stmt->bindParam(':email', $email, \PDO::PARAM_STR);
+        $stmt->bindParam(':role', $role, \PDO::PARAM_STR);
 
-        $params = [$username, $password, $fullname, $email, $role];
+        $stmt->execute();
 
-        $stmt->execute($params);
-
-        if ($stmt->rowCount() > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return $user = $this->getUserByUsername($username);
     }
 
 }

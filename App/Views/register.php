@@ -18,7 +18,7 @@
                         <form id="registerForm">
                             <div class="form-group">
                                 <label for="fullname">Họ và tên:</label>
-                                <input type="text" class="form-control" id="fullname" name="fullname" required>
+                                <input type="text" class="form-control text-capitalize" id="fullname" name="fullname" required>
                                 <p id="fullnameError" class="text-danger"></p>
                             </div>
                             <div class="form-group">
@@ -65,28 +65,62 @@
                 let repassword = $('#repassword').val();
 
                 // Thực hiện kiểm tra dữ liệu đăng ký ở đây
+                var isValid = true;
 
-                // Dùng Ajax để gửi dữ liệu đăng ký
-                $.ajax({
-                    type: 'POST',
-                    url: '/register', // Đặt địa chỉ xử lý đăng ký của bạn
-                    data: {
-                        fullname: fullname,
-                        username: username,
-                        email: email,
-                        password: password,
-                        repassword: repassword
-                    },
-                    success: function (response) {
-                        if (response.status === 'success') {
-                            // Chuyển hướng người dùng sau đăng ký thành công
-                            window.location.href = response.redirect;
-                        } else {
-                            // Hiển thị thông báo lỗi
-                            $('#registerMessage').text(response.message);
+                if (fullname.length === 0) {
+                    $('#fullnameError').text('Bắt buộc phải thêm họ và tên');
+                    isValid = false;
+                }
+
+                if (username.length === 0) {
+                    $('#usernameError').text('phải thêm username');
+                    isValid = false;
+                }
+
+                if (username.length < 6 || !/\d/.test(username)) {
+                    $('#usernameError').text('Tên đăng nhập phải có ít nhất 6 kí tự và chứa ít nhất một kí tự số.');
+                    return;
+                }
+
+                var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    $('#emailError').text('Invalid email format.');
+                    isValid = false;
+                }
+
+                if (username.length < 6) {
+                    $('#passwordError').text('Mật khẩu phải có hơn 6 kí tự');
+                    isValid = false;
+                }
+
+                if (password !== repassword) {
+                    $('#repasswordError').text('Mật khẩu và nhập lại không trùng khớp');
+                    isValid = false;
+                }
+
+                if (isValid) {
+                    // Perform the AJAX submission here
+                    $.ajax({
+                        type: 'POST',
+                        url: '/register', // Đặt địa chỉ xử lý đăng ký của bạn
+                        data: {
+                            username: username,
+                            fullname: fullname,
+                            email: email,
+                            password: password,
+                            repassword: repassword
+                        },
+                        success: function (response) {
+                            if (response.status === 'success') {
+                                // Chuyển hướng người dùng sau đăng ký thành công
+                                window.location.href = response.redirect;
+                            } else {
+                                // Hiển thị thông báo lỗi
+                                $('#registerMessage').text(response.message);
+                            }
                         }
-                    }
-                });
+                    });
+                }
             });
 
             function clearErrors() {

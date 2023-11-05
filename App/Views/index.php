@@ -8,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <link rel="stylesheet" href="./static/css/styles.css" />
-    <title>Bootstap 5 Responsive Admin Dashboard</title>
+    <title>My LRC</title>
 </head>
 
 <body>
@@ -34,7 +34,7 @@
                         class="fas fa-comment-dots me-2"></i>Chat</a>
                 <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fas fa-map-marker-alt me-2"></i>Outlet</a>
-                <a href="#" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold"><i
+                <a href="/logout" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold"><i
                         class="fas fa-power-off me-2"></i>Logout</a>
             </div>
         </div>

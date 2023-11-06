@@ -5,7 +5,7 @@ namespace App\Controllers;
 class HomeController {
     public function index() {
         if(isset($_SESSION['user_id']) ){
-            require_once "../App/Views/index.php";
+            require_once "../App/Views/user/index.php";
         } else{
             header("Location: /login");
         }
@@ -13,7 +13,7 @@ class HomeController {
 
     public function admin() {
         if(isset($_SESSION['user_admin']) && $_SESSION['user_admin'] == 'True'){
-            require_once '../App/Views/admin.php';
+            require_once '../App/Views/admin/admin.php';
         } else {
             header("Location: /login");
         }

@@ -34,7 +34,8 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle second-text fw-bold" href="#" id="navbarDropdown"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-user me-2"></i><?php echo $_SESSION['user_name'] ?>
+                                <i class="fas fa-user me-2"></i>
+                                <?php echo $_SESSION['user_name'] ?>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="/infor">Profile</a></li>
@@ -47,50 +48,31 @@
             </nav>
 
             <div class="row m-4">
-                <h3 class="fs-4 mb-3 ms-3">List Books</h3>
-                <div class="col">
-                    <table id="books_table" class="table table-striped table-bordered">
-                        <thead>
-                            <tr>
-                                <th scope="col">BookID</th>
-                                <th scope="col">Title</th>
-                                <th scope="col">Author</th>
-                                <th scope="col">Category</th>
-                                <th scope="col">Quantity</th>
-                                <th scope="col">AvailableQuantity</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($books as $book): ?>
-                                <tr>
-                                    <td>
-                                        <?= $book['BookID'] ?>
-                                    </td>
-                                    <td>
-                                        <?= $book['Title'] ?>
-                                    </td>
-                                    <td>
-                                        <?= $book['Author'] ?>
-                                    </td>
-                                    <td>
-                                        <?= $book['CategoryName'] ?>
-                                    </td>
-                                    <td>
-                                        <?= $book['Quantity'] ?>
-                                    </td>
-                                    <td>
-                                        <?= $book['AvailableQuantity'] ?>
-                                    </td>
-                                </tr>
-                            <?php endforeach ?>
-                        </tbody>
-                    </table>
-                    <!-- Table Ends Here -->
-                </div>
-            </div>
+                <h3>Thông tin người dùng</h3>
+                <form class="col-5">
+                    <div class="form-group mb-3">
+                        <label for="user-id"><i class="fas fa-id-badge"></i> UserID:</label>
+                        <input type="text" class="form-control" id="user-id" name="user-id" value="<?=$user['UserID'] ?>">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="username"><i class="fas fa-user-circle"></i> Username:</label>
+                        <input type="text" class="form-control" id="username" name="username" value="<?=$user['Username'] ?>">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="full-name"><i class="fas fa-user"></i> Họ tên:</label>
+                        <input type="text" class="form-control text-capitalize" id="full-name" name="full-name"
+                            value="<?=$user['FullName'] ?>">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="email"><i class="fas fa-envelope"></i> Email:</label>
+                        <input type="email" class="form-control" id="email" name="email" value="<?=$user['Email'] ?>">
+                    </div>
+                </form>
 
             </div>
+
         </div>
+    </div>
     </div>
     <!-- /#page-content-wrapper -->
     </div>

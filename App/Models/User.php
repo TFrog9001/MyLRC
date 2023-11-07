@@ -25,7 +25,7 @@ class User
         return $user;
     }
 
-    public function getUserByID(string $id)
+    public function getUserByID($id)
     {
         $db = $this->db->getConnection();
         $query = $db->prepare("SELECT * FROM users WHERE UserID = :id;");

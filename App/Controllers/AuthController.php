@@ -109,6 +109,11 @@ class AuthController
     }
 
 
+    public function infor(){
+        $user = (new User())->getUserByID($_SESSION['user_id']);
+        require_once('../App/Views/user/information.php');
+    }
+
     public function logout()
     {
         session_destroy();

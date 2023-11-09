@@ -26,6 +26,7 @@ if (isset($_SESSION['user_name']) && isset($_SESSION['user_admin']) && $_SESSION
     $router->get('/books/edit/(\d+)','\App\Controllers\BookController@editBook');
     $router->post('/books/edit/(\d+)','\App\Controllers\BookController@editBook');
     $router->post('/books/delete/(\d+)','\App\Controllers\BookController@deleteBook');
+    $router->get('/borrows','\App\Controllers\BorrowController@borrows');
     
 }
 if (isset($_SESSION['user_name']) && !isset($_SESSION['user_admin'])) {

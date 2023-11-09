@@ -9,7 +9,7 @@
                         class="fas fa-book me-2"></i>Books</a>
                 <a href="/books/add" class="list-group-item list-group-item-action bg-transparent second-text active"><i
                         class="fas fa-book-medical me-2"></i>Add Book</a>
-                <a href="/books/borrow" class="list-group-item list-group-item-action bg-transparent second-text active"><i
+                <a href="/borrows" class="list-group-item list-group-item-action bg-transparent second-text active"><i
                         class="fas fa-address-book me-2"></i>Borrow History</a>
                 <a href="/logout" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold"><i
                         class="fas fa-power-off me-2"></i>Logout</a>

@@ -34,14 +34,14 @@
 
             <div class="row">
                 <div class="col mb-3">
-                    <label for="available_quantity" class="form-label">Availabel</label>
-                    <input type="number" class="form-control" id="available_quantity" name="available_quantity"
-                        value="<?= $book['AvailableQuantity'] ?>" disabled>
-                </div>
-                <div class="col mb-3">
                     <label for="quantity" class="form-label">Quantity</label>
                     <input type="number" class="form-control" id="quantity" name="quantity"
                         value="<?= $book['Quantity'] ?>" disabled>
+                </div>
+                <div class="col mb-3">
+                    <label for="available_quantity" class="form-label">Availabel</label>
+                    <input type="number" class="form-control" id="available_quantity" name="available_quantity"
+                        value="<?= $book['AvailableQuantity'] ?>" disabled>
                 </div>
                 <div class="col mb-3 mx-2">
                     <label for="updatequantity" class="form-label">Update Quantity</label>

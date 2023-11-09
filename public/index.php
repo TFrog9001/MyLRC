@@ -31,9 +31,9 @@ if (isset($_SESSION['user_name']) && isset($_SESSION['user_admin']) && $_SESSION
 if (isset($_SESSION['user_name']) && !isset($_SESSION['user_admin'])) {
     $router->get('/home','\App\Controllers\BookController@booksUser');
     $router->get('/books','\App\Controllers\BookController@booksUser');
-    $router->get('/logout','\App\Controllers\AuthController@logout');
     $router->get('/infor','\App\Controllers\AuthController@infor');
 }
+$router->get('/logout','\App\Controllers\AuthController@logout');
 // $router->get('/test','\App\Models\Book@createBookTest');
 // $router->post('/test','\App\Controllers\BookController@addNewBook');
 

@@ -40,7 +40,7 @@ class AuthController
                 // Đăng nhập thành công, thiết lập session hoặc token ở đây
                 $_SESSION['user_id'] = $user['UserID'];
                 $_SESSION['user_name'] = $user['Username'];
-                echo json_encode(['status' => 'success', 'message' => 'Đăng nhập thành công user.', 'redirect' => '/home']);
+                echo json_encode(['status' => 'success', 'message' => 'Đăng nhập thành công user.', 'redirect' => '/books']);
             } else {
                 // Trả về thông báo lỗi nếu username hoặc password không đúng
                 echo json_encode(['status' => 'error', 'message' => 'Tên đăng nhập hoặc mật khẩu không đúng.']);

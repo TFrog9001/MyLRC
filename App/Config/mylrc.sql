@@ -43,6 +43,13 @@ CREATE TABLE BorrowHistory (
     FOREIGN KEY (BookID) REFERENCES Books(BookID)
 );
 
+-- Thêm lại ràng buộc với giá trị -1 khi xóa
+ALTER TABLE BorrowHistory
+ADD CONSTRAINT borrowhistory_ibfk_2
+FOREIGN KEY (BookID)
+REFERENCES Books(BookID)
+ON DELETE SET NULL;
+
 DELIMITER //
 CREATE PROCEDURE AddUser(
     IN p_Username VARCHAR(50),
@@ -114,7 +121,25 @@ END;
 DELIMITER ;
 
 DELIMITER //
-CREATE PROCEDURE BorrowBook(
+CREATE TRIGGER UpdateAvailableQuantityOnDelete
+AFTER DELETE ON BorrowHistory
+FOR EACH ROW
+BEGIN
+    DECLARE book_id INT;
+    
+    -- Lấy mã sách từ giao dịch mượn sách đã bị xóa
+    SET book_id = OLD.BookID;
+
+    -- Cộng lại AvailableQuantity trong bảng Books
+    UPDATE Books
+    SET AvailableQuantity = AvailableQuantity + 1
+    WHERE BookID = book_id;
+END;
+//
+DELIMITER ;
+
+DELIMITER //
+CREATE DEFINER=`root`@`localhost` PROCEDURE `BorrowBook`(
     IN p_UserID INT,
     IN p_BookID INT
 )
@@ -129,42 +154,7 @@ BEGIN
         -- Thêm dòng thông tin vào BorrowHistory với ngày mượn hiện tại và ngày trả dự kiến
         INSERT INTO BorrowHistory (UserID, BookID, BorrowDate, ReturnDate)
         VALUES (p_UserID, p_BookID, CURDATE(), DATE_ADD(CURDATE(), INTERVAL 7 DAY));
-
-        -- Cập nhật availableQuantity giảm đi 1
-        UPDATE Books
-        SET AvailableQuantity = AvailableQuantity - 1
-        WHERE BookID = p_BookID;
     END IF;
 END;
 //
 DELIMITER ;
-
-
--- Chỉnh sửa BorrowHistory để thêm các dòng với UserID là 3 và 5 và thời gian mượn 1 tuần
--- Sử dụng hàm DATE_ADD để tính ngày trả dựa trên ngày mượn
--- INSERT INTO BorrowHistory (UserID, BookID, BorrowDate, ReturnDate)
--- VALUES
---     (3, 1, '2023-11-09', DATE_ADD('2023-11-09', INTERVAL 7 DAY)),
---     (3, 2, '2023-11-10', DATE_ADD('2023-11-10', INTERVAL 7 DAY)),
---     (3, 21, '2023-11-11', DATE_ADD('2023-11-11', INTERVAL 7 DAY)),
---     (3, 22, '2023-11-12', DATE_ADD('2023-11-12', INTERVAL 7 DAY)),
---     (5, 1, '2023-11-13', DATE_ADD('2023-11-13', INTERVAL 7 DAY)),
---     (5, 2, '2023-11-14', DATE_ADD('2023-11-14', INTERVAL 7 DAY)),
---     (5, 21, '2023-11-15', DATE_ADD('2023-11-15', INTERVAL 7 DAY)),
---     (5, 22, '2023-11-16', DATE_ADD('2023-11-16', INTERVAL 7 DAY));
-
--- SELECT
---     U.UserID,
---     U.Username,
---     U.FullName,
---     U.Email,
---     B.BookID,
---     B.Title,
---     BH.BorrowID,
---     BH.BorrowDate,
---     BH.ReturnDate
--- FROM Users U
--- JOIN BorrowHistory BH ON U.UserID = BH.UserID
--- JOIN Books B ON BH.BookID = B.BookID;
-
-

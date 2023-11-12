@@ -2,21 +2,22 @@
 <?php require_once '../App/Views/menu/admin_menu.php'; ?>
 
 <!-- Main -->
-<div class="row m-4">
-    <h3 class="fs-4 mb-3 ms-3">Borrow History</h3>
+<div class="row m-1">
+    <h3 class="fs-4 mb-3 ms-1">Borrow History</h3>
     <div class="col">
         <table id="borrows_table" class="table table-striped table-bordered">
             <thead>
                 <tr>
-                    <th scope="col">BorrowID</th>
-                    <th scope="col">UserID</th>
-                    <th scope="col">Username</th>
-                    <th scope="col">Fullname</th>
+                    <th scope="col">Borrow&#10;ID</th>
+                    <th scope="col">User&#10;ID</th>
+                    <th scope="col">User&#10;name</th>
+                    <th scope="col">Fullname&#160;&#160;&#160;&#160;</th>
                     <th scope="col">Email</th>
-                    <th scope="col">BookID</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Borrow Date</th>
-                    <th scope="col">Return Date</th>
+                    <th scope="col">Book ID</th>
+                    <th scope="col">Title&#160;&#160;&#160;&#160;&#160;&#160;</th>
+                    <th scope="col">BorrowDate&#160;&#160;</th>
+                    <th scope="col">ReturnDate&#160;&#160;</th>
+                    <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -31,7 +32,7 @@
                         <td>
                             <?= $borrow['Username'] ?>
                         </td>
-                        <td>
+                        <td class="text-capitalize">
                             <?= $borrow['FullName'] ?>
                         </td>
                         <td>
@@ -49,6 +50,13 @@
                         <td>
                             <?= $borrow['ReturnDate'] ?>
                         </td>
+                        <td>
+                            <form class="form-inline ml-1" action="<?= '/borrows/return/' . $borrow['BorrowID'] ?>" method="POST">
+                                <button type="submit" class="btn btn-xs btn-primary" name="return-book">
+                                    Return
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                 <?php endforeach ?>
             </tbody>
@@ -57,44 +65,14 @@
     </div>
 </div>
 <!-- End main -->
-<!-- Model -->
-<div class="modal fade" id="delete-confirm" tabindex="-1" aria-labelledby="deleteBookModal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteBookModal">Confirmation</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Do you want to delete this book
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="delete">Delete</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            </div>
-        </div>
-    </div>
-</div>
 </div>
 </div>
 <?php require_once '../App/Views/menu/footer.php'; ?>
 <script>
     $(document).ready(function () {
         $('#borrows_table').DataTable();
-        $('button[name="delete-book"]').on('click', function (e) {
-            e.preventDefault();
-            const form = $(this).closest('form');
-            const nameTd = $(this).closest('tr').find('td').eq(1);
-            if (nameTd.length > 0) {
-                $('.modal-body').html(`Do you want to delete "<a class="fw-bold text-dark">${nameTd.text()}</a>" ?`);
-            }
-            $('#delete-confirm').modal('show');
+        
 
-            $('#delete').one('click', function () {
-                form.trigger('submit');
-                $('#delete-confirm').modal('hide');
-            });
-        });
     });
 
 </script>

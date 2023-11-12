@@ -49,53 +49,52 @@
                 </div>
             </nav>
 
-            <div class="row m-4">
-                <h3 class="fs-4 mb-3 ms-3">List Books</h3>
+            <div class="row m-1">
+                <h3 class="fs-4 mb-3 ms-1">Borrow History</h3>
                 <div class="col">
-                    <table id="books_table" class="table table-striped table-bordered">
+                    <table id="borrows_table" class="table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <th scope="col">BookID</th>
-                                <th scope="col">Title</th>
-                                <th scope="col">Author</th>
-                                <th scope="col">Category</th>
-                                <th scope="col">Quantity</th>
-                                <th scope="col">Available</th>
-                                <th scope="col">Action</th>
+                                <th scope="col">Borrow&#10;ID</th>
+                                <th scope="col">User&#10;ID</th>
+                                <th scope="col">User&#10;name</th>
+                                <th scope="col">Fullname&#160;&#160;&#160;&#160;</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Book ID</th>
+                                <th scope="col">Title&#160;&#160;&#160;&#160;&#160;&#160;</th>
+                                <th scope="col">BorrowDate&#160;&#160;</th>
+                                <th scope="col">ReturnDate&#160;&#160;</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($books as $book): ?>
+                            <?php foreach ($borrows as $borrow): ?>
                                 <tr>
                                     <td>
-                                        <?= $book['BookID'] ?>
+                                        <?= $borrow['BorrowID'] ?>
                                     </td>
                                     <td>
-                                        <?= $book['Title'] ?>
+                                        <?= $borrow['UserID'] ?>
                                     </td>
                                     <td>
-                                        <?= $book['Author'] ?>
+                                        <?= $borrow['Username'] ?>
+                                    </td>
+                                    <td class="text-capitalize">
+                                        <?= $borrow['FullName'] ?>
                                     </td>
                                     <td>
-                                        <?= $book['CategoryName'] ?>
+                                        <?= $borrow['Email'] ?>
                                     </td>
                                     <td>
-                                        <?= $book['Quantity'] ?>
+                                        <?= $borrow['BookID'] ?>
                                     </td>
                                     <td>
-                                        <?= $book['AvailableQuantity'] ?>
+                                        <?= $borrow['Title'] ?>
                                     </td>
                                     <td>
-                                        <form method="post" action="/borrows/borrow/<?= $book['BookID'] ?>">
-                                            <?php
-                                            // Check if AvailableQuantity is greater than 0
-                                            $isAvailable = $book['AvailableQuantity'] > 0;
-                                            ?>
-                                            <button type="submit" name="borrowBook" class="btn btn-outline-success"
-                                                <?= $isAvailable ? '' : 'disabled' ?>>
-                                                <?= $isAvailable ? 'Borrow' : 'Not Available' ?>
-                                            </button>
-                                        </form>
+                                        <?= $borrow['BorrowDate'] ?>
+                                    </td>
+                                    <td>
+                                        <?= $borrow['ReturnDate'] ?>
                                     </td>
                                 </tr>
                             <?php endforeach ?>
@@ -114,7 +113,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/v/bs4/dt-1.13.6/datatables.min.js"></script>
     <script>
-        $('#books_table').DataTable();
+        $('#borrows_table').DataTable();
         var el = document.getElementById("wrapper");
         var toggleButton = document.getElementById("menu-toggle");
 

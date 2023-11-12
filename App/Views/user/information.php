@@ -9,6 +9,8 @@
             <div class="list-group list-group-flush my-3">
                 <a href="/books" class="list-group-item list-group-item-action bg-transparent second-text active"><i
                         class="fas fa-book me-2"></i>Books</a>
+                <a href="/history" class="list-group-item list-group-item-action bg-transparent second-text active"><i
+                        class="fas fa-address-book me-2"></i>Borrow History</a>
                 <a href="/logout" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold"><i
                         class="fas fa-power-off me-2"></i>Logout</a>
             </div>
@@ -52,20 +54,22 @@
                 <form class="col-5">
                     <div class="form-group mb-3">
                         <label for="user-id"><i class="fas fa-id-badge"></i> UserID:</label>
-                        <input type="text" class="form-control" id="user-id" name="user-id" value="<?=$user['UserID'] ?>">
+                        <input type="text" class="form-control" id="user-id" name="user-id"
+                            value="<?= $user['UserID'] ?>">
                     </div>
                     <div class="form-group mb-3">
                         <label for="username"><i class="fas fa-user-circle"></i> Username:</label>
-                        <input type="text" class="form-control" id="username" name="username" value="<?=$user['Username'] ?>">
+                        <input type="text" class="form-control" id="username" name="username"
+                            value="<?= $user['Username'] ?>">
                     </div>
                     <div class="form-group mb-3">
                         <label for="full-name"><i class="fas fa-user"></i> Họ tên:</label>
                         <input type="text" class="form-control text-capitalize" id="full-name" name="full-name"
-                            value="<?=$user['FullName'] ?>">
+                            value="<?= $user['FullName'] ?>">
                     </div>
                     <div class="form-group mb-3">
                         <label for="email"><i class="fas fa-envelope"></i> Email:</label>
-                        <input type="email" class="form-control" id="email" name="email" value="<?=$user['Email'] ?>">
+                        <input type="email" class="form-control" id="email" name="email" value="<?= $user['Email'] ?>">
                     </div>
                 </form>
 
